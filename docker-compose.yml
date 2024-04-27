@@ -3,6 +3,7 @@ version: '3.4'
 services:
   samba:
     image: dperson/samba
+    container_name: samba1
     environment:
       TZ: 'EST5EDT'
     ports:
@@ -20,3 +21,9 @@ services:
 #      - /mnt:/mnt:z
 #      - /mnt2:/mnt2:z
     command: '-s "mnt;/mnt" -s "mnt2;/mnt2;yes;no;no;bob" -u "bob;bobspasswd" -p'
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge

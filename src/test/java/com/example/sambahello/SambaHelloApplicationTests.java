@@ -35,7 +35,7 @@ class SambaHelloApplicationTests {
 
 
         CIFSContext contextWithCred = baseContext.withCredentials(new NtlmPasswordAuthenticator(null, "bob", "bobspasswd"));
-        SmbFile share = new SmbFile("smb://172.25.0.2/mnt", contextWithCred);
+        SmbFile share = new SmbFile("smb://localhost:445/mnt", contextWithCred);
         boolean a = share.exists();
 
         CloseableIterator c = share.children();
