@@ -26,7 +26,25 @@ import java.util.Properties;
 class SambaHelloApplicationTests {
 
     @Test
-    void start() throws MalformedURLException, CIFSException, IOException {
+    void connectToDocker() throws MalformedURLException, CIFSException, IOException {
+        Properties prop = new Properties();
+        prop.put( "jcifs.smb.client.useExtendedSecurity","false" );
+        prop.put( "jcifs.smb.client.useSMB2Negotiation", "true" );
+        Configuration config = new PropertyConfiguration(prop);
+        CIFSContext baseContext = new BaseContext(config);
+
+
+        CIFSContext contextWithCred = baseContext.withCredentials(new NtlmPasswordAuthenticator(null, "bob", "bobspasswd"));
+        SmbFile share = new SmbFile("smb://172.25.0.2/mnt", contextWithCred);
+        boolean a = share.exists();
+
+        CloseableIterator c = share.children();
+
+        int b = 0;
+    }
+
+    @Test
+    void connectToReal() throws MalformedURLException, CIFSException, IOException {
         String domain = "192.168.1.103";
         Properties prop = new Properties();
         prop.put( "jcifs.smb.client.useExtendedSecurity","false" );
@@ -43,4 +61,5 @@ class SambaHelloApplicationTests {
 
         int b = 0;
     }
+
 }
